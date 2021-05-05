@@ -8,7 +8,6 @@ s()
 async function s(){
     frame++;
     setTitle(`Video to Ascii NodeJS | fps: ${fps} | frame: ${frame} | Made by JunkMeal`)
-    console.clear()
     let number = frame.toString();
     if(frame < 10) number = "00"+frame;
     else if(frame < 100) number = "0"+frame;
@@ -19,7 +18,7 @@ async function s(){
         while(y !== 36){
          const {r,g,b} = Jimp.intToRGBA(image.getPixelColor(x, y))
          const relativeLuminance = (0.2126*r + 0.7152*g + 0.0722*b); 
-         let index = Math.round(relativeLuminance / (255 / chars.length));
+         let index = Math.floor(relativeLuminance / (255 / chars.length));
          if(chars[index]) pixels.push(chars[index])
          else pixels.push(chars[0])
          if(x !== 50) x++;
@@ -29,7 +28,9 @@ async function s(){
              pixels.push("\n")
          }
         }
-        console.log(join+pixels.join(join))
+        //console.clear()
+        process.stdout.write("\u001b[0;0H")
+        process.stdout.write(join+pixels.join(join))
         if(frame !== maxframes) setTimeout(s,1000 / fps)
     });
 }
