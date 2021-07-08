@@ -1,9 +1,11 @@
-const {chars, fps, join} = require("../config.json")
+const rgbToAnsi256 = require("./ansi.js")
+const {chars, fps, join, color} = require("../config.json")
 let frame = 1;
 let maxframes = require("fs").readdirSync(__dirname+"/frames/").length
 const Jimp = require("jimp")
 var setTitle = require('console-title');
 setTitle(`Video to Ascii NodeJS | fps: ${fps} | frame: ${frame} | Made by JunkMeal`);
+console.clear()
 s()
 async function s(){
     frame++;
@@ -19,8 +21,8 @@ async function s(){
          const {r,g,b} = Jimp.intToRGBA(image.getPixelColor(x, y))
          const relativeLuminance = (0.2126*r + 0.7152*g + 0.0722*b); 
          let index = Math.floor(relativeLuminance / (255 / chars.length));
-         if(chars[index]) pixels.push(chars[index])
-         else pixels.push(chars[0])
+         if(chars[index]) pixels.push(`${color ? `\x1b[38;5;${rgbToAnsi256(r,g,b)}m` : ""}`+chars[index])
+         else pixels.push(`${color ? `\x1b[38;5;${rgbToAnsi256(r,g,b)}m` : ""}`+chars[0])
          if(x !== 50) x++;
          else {
              x = 0;
@@ -28,7 +30,6 @@ async function s(){
              pixels.push("\n")
          }
         }
-        //console.clear()
         process.stdout.write("\u001b[0;0H")
         process.stdout.write(join+pixels.join(join))
         if(frame !== maxframes) setTimeout(s,1000 / fps)

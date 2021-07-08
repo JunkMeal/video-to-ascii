@@ -18,7 +18,8 @@ sh start.sh # starts playing
 {
     "chars": [" ","░", "▒", "▓", "█"],
     "fps": 30,
-    "join": ""
+    "join": "",
+    "color": true
 }
 ```
 
@@ -30,3 +31,6 @@ The fps that the frames will be played at
 
 ## Join
 The spacing between pixels
+
+## Color
+Enables colors
