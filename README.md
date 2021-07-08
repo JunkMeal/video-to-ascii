@@ -1,5 +1,5 @@
-# bad-apple-nodejs
-Plays bad apple in NodeJS command line (other videos too but not too well)
+# video-to-ascii
+Plays bad apple (or other videos) in NodeJS command line (other videos too but not too well)
 
 ## Installation
 ### Works on linux and windows (scripts only for linux)
